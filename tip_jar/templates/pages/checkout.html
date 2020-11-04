@@ -178,6 +178,7 @@
     <span id="button-text">Pay</span>
   </button>
   <p id="card-error" role="alert"></p>
+  <p id="card-success" role="alert"></p>
 </form>
 
 {% endblock %}
@@ -299,10 +300,7 @@
               showError(result.error.message);
             } else {
               // The payment succeeded!
-              document.querySelector("#button-text").textContent = "Ba Dum (Cha-Ching)!";
-              document.querySelector("#spinner").classList.add("hidden");
-              document.querySelector("#button-text").classList.remove("hidden");
-              document.querySelector("#card-error").innerHTML = `<a href="/">Back to homepage</a>`;
+              showSuccess();
             }
           });
       };
@@ -316,6 +314,14 @@
           errorMsg.textContent = "";
         }, 8000);
       };
+
+      // Handle success
+      var showSuccess = function() {
+        document.querySelector("#button-text").textContent = "Ba Dum (Cha-Ching)!";
+        document.querySelector("#spinner").classList.add("hidden");
+        document.querySelector("#button-text").classList.remove("hidden");
+        document.querySelector("#card-success").innerHTML = `<a href="/">Back to homepage</a>`;
+      }
 
     </script>
 
