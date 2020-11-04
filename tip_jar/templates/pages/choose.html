@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+
+{% block addedcss %}
+
+<style>
+
+  .donation-container {
+    max-width: 500px;
+    align-self: center;
+    margin: auto;
+    margin-top: 2rem;
+  }
+
+  .donation-type {
+    width: calc(50% - 0.5rem);
+    height: 55px;
+    float: left;
+    margin-right: 1rem;
+    margin-top: 1rem;
+  }
+
+  @media screen and (max-width: 400px) {
+    .donation-type {
+      width: 100%;
+    }
+  }
+
+  .donation-type:last-child {
+    margin-right: 0rem;
+  }
+
+  .donation-button-container:first-child > .donation-type {
+    margin-top: 0rem;
+  }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="donation-container">
+
+  <p>Please choose a donation amount. Tips are split between the performers.</p>
+
+  <div class="donation-button-container">
+    <button class="donation-type" amount="5">
+      $5
+    </button>
+
+    <button class="donation-type" amount="10">
+      $10
+    </button>
+  </div>
+
+  <div class="donation-button-container">
+    <button class="donation-type" amount="20">
+      $20
+    </button>
+
+    <button class="donation-type" amount="50">
+      $50
+    </button>
+  </div>
+</div>
+
+{% endblock %}
+
+{% block addedjavascript %}
+
+<script type="text/javascript">
+  var buttons = document.getElementsByTagName("button");
+  for (i = 0; i < buttons.length; i++) {
+    buttons[i].addEventListener("click", function() {
+      var amount = this.getAttribute("amount");
+      document.location.href = `/checkout?amount=${amount}`;
+    });
+  }
+</script>
+
+{% endblock %}
