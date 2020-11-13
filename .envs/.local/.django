@@ -2,3 +2,5 @@
 # ------------------------------------------------------------------------------
 USE_DOCKER=yes
 IPYTHONDIR=/app/.ipython
+STRIPE_API_KEY =sk_test_51HjCYCJNxsmNR22QDfO7ZdnBVGhSVsvg3N7CRTjO3YT4PRnbWSioACydI7o8evZgpeytYDzEySLfEzQABZy3Vg1Q00Ttomf4p7
+STRIPE_ENDPOINT_SECRET=whsec_3KI9dOc1vablmaaNEVfS7NuMFECrynED

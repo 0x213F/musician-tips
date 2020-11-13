@@ -1,7 +1,11 @@
 from django.core.serializers import serialize
-from django.http import (HttpResponse, HttpResponseBadRequest,
-                         HttpResponseForbidden, HttpResponseRedirect,
-                         JsonResponse)
+from django.http import (
+    HttpResponse,
+    HttpResponseBadRequest,
+    HttpResponseForbidden,
+    HttpResponseRedirect,
+    JsonResponse,
+)
 from django.template.response import TemplateResponse
 from django.views import View
 
@@ -23,7 +27,6 @@ class BaseView(View):
         }
         if data:
             response['data'] = data
-
         if type(response) == dict:
             return JsonResponse(response)
         if type(response) == list:
@@ -42,11 +45,11 @@ class BaseView(View):
         """
         return HttpResponseForbidden(message)
 
-    def http_response_422(self, message):
-        '''
-        INVALID FORMAT
-        '''
-        return HttpResponse(status_code=422, message=message)
+    # def http_response_422(self, message):
+    #     '''
+    #     INVALID FORMAT
+    #     '''
+    #     return HttpResponse(status_code=422, message=message)
 
     def template_response(self, request, template, context={}):
         return TemplateResponse(request, template, context)

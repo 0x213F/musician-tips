@@ -5,17 +5,27 @@ from django.urls import include, path
 from django.views import defaults as default_views
 from django.views.generic import TemplateView
 
+from .views import (
+    MusicianDonateView,
+    MusicianChooseView,
+    MusicianCheckoutView,
+)
+
 urlpatterns = [
-    path("", TemplateView.as_view(template_name="pages/donate.html"), name="home"),
-    path(
-        "choose/", TemplateView.as_view(template_name="pages/choose.html"), name="choose"
-    ),
-    path(
-        "checkout/", TemplateView.as_view(template_name="pages/checkout.html"), name="checkout"
-    ),
-    path("payments/", include("tip_jar.payments.urls", namespace="payments")),
-    # Django Admin, use {% url 'admin:index' %}
+    # Static
+    path("", TemplateView.as_view(template_name="pages/home.html"), name="home"),
+    # Admin
     path(settings.ADMIN_URL, admin.site.urls),
+    # API
+    path("api/payments/", include("tip_jar.payments.urls", namespace="payments")),
+    # Application
+    path("<str:musician>/", MusicianDonateView.as_view(), name="donate"),
+    path(
+        "<str:musician>/choose/", MusicianChooseView.as_view(), name="choose"
+    ),
+    path(
+        "<str:musician>/checkout/", MusicianCheckoutView.as_view(), name="checkout"
+    ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

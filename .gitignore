@@ -274,7 +274,4 @@ tip_jar/media/
 .ipython/
 .env
 .envs/*
-!.envs/.local/
-
-# Custom
-tip_jar/secrets.py
+!.envs/.template/

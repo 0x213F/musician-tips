@@ -1,0 +1,6 @@
+# General
+# ------------------------------------------------------------------------------
+USE_DOCKER=yes
+IPYTHONDIR=/app/.ipython
+STRIPE_API_KEY=
+STRIPE_ENDPOINT_SECRET=

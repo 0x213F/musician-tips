@@ -12,8 +12,9 @@ class UserAdmin(auth_admin.UserAdmin):
 
     form = UserChangeForm
     add_form = UserCreationForm
-    fieldsets = (("User", {"fields": ("name",)}),) + tuple(
-        auth_admin.UserAdmin.fieldsets
+    fieldsets = tuple(auth_admin.UserAdmin.fieldsets) + (
+        ("Payment Options", {"fields": ("venmo_url", "cash_app_url", "paypal_url", "has_stripe_enabled")}),
+        ("Display", {"fields": ("name", "landing_text",)}),
     )
     list_display = ["username", "name", "is_superuser"]
     search_fields = ["name"]

@@ -33,6 +33,18 @@
     margin-top: 0rem;
   }
 
+  .right-and-grey {
+    color: rgb(105, 115, 134);
+    text-align: right;
+    font-size: 0.875rem;
+    margin-top: 0.5rem;
+    margin-bottom: 1.5rem;  /* + 0.5 rem */
+  }
+
+  .musician-name {
+    font-size: 1.5rem;
+  }
+
 </style>
 
 {% endblock %}
@@ -41,7 +53,9 @@
 
 <div class="donation-container">
 
-  <p>Please choose a donation amount. Tips are split between the performers.</p>
+  <p class="musician-name"><b>{{ musician.name }}</b></p>
+
+  <p class="right-and-grey">Please choose a donation amount.</p>
 
   <div class="donation-button-container">
     <button class="donation-type" amount="5">
@@ -73,7 +87,7 @@
   for (i = 0; i < buttons.length; i++) {
     buttons[i].addEventListener("click", function() {
       var amount = this.getAttribute("amount");
-      document.location.href = `/checkout?amount=${amount}`;
+      document.location.href = `../checkout/?amount=${amount}`;
     });
   }
 </script>

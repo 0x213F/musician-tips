@@ -267,3 +267,5 @@ SOCIALACCOUNT_ADAPTER = "tip_jar.users.adapters.SocialAccountAdapter"
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+STRIPE_API_KEY = env("STRIPE_API_KEY")
+STRIPE_ENDPOINT_SECRET = env("STRIPE_ENDPOINT_SECRET")
