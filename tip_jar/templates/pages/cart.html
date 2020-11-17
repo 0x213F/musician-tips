@@ -21,6 +21,15 @@
     text-decoration: none;
   }
 
+  .dropdown-item{
+    text-align: center;
+    height: 40px;
+  }
+
+  img {
+    vertical-align: unset;
+  }
+
 </style>
 
 {% endblock %}
@@ -42,13 +51,15 @@
     </div>
     <div class="card-body">
 
-      <div class="form-group" style="margin-bottom: 0; text-align: left;">
+      <div class="form-group" style="margin-bottom: 0; text-align: left; padding-bottom: 0.25rem;">
         <div class="form-check">
           <input id="transaction-covered" class="form-check-input refresh-page" type="checkbox" {% if transaction_covered %}checked{% endif %}>
           <label class="form-check-label" style="text-align: left;">
             Cover the transaction fee
           </label>
         </div>
+      </div>
+      <div class="form-group" style="margin-bottom: 0; text-align: left;">
         <div class="form-check">
           <input id="website-donation" class="form-check-input refresh-page" type="checkbox" {% if website_donation %}checked{% endif %}>
           <label class="form-check-label">
@@ -58,9 +69,37 @@
       </div>
       <div style="width: 100%; height: 1.25rem;"></div>
       <div class="form-group" style="margin-bottom: 0;">
-        <a href="#" class="btn btn-primary">Checkout</a>
+        <button id="go-to-checkout" class="btn btn-primary">Checkout</button>
       </div>
     </div>
+  </div>
+
+  <div style="width: 100%; height: 155px;"></div>
+
+  <div class="dropup">
+    <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Other payment options
+    </a>
+
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+      <a class="dropdown-item" href="#" style="padding-top: 10px; padding-bottom: 12px;"><img src="/static/images/venmo.png" style="height: 15px;"/></a>
+      <a class="dropdown-item" href="#" style="padding-top: 7px; padding-bottom: 7px;"><img src="/static/images/cashapp.png" style="height: 26px;"/></a>
+      <a class="dropdown-item" href="#" style="padding-top: 5px; padding-bottom: 5px;"><img src="/static/images/paypal.svg" style="height: 30px;"/></a>
+    </div>
+  </div>
+
+  <div class="donation-button-container">
+    {% if musician.venmo_url %}
+    <button class="donation-type" redirect="{{ musician.venmo_url }}">
+      <img src="/static/images/venmo.png" style="width: 90px;"/>
+    </button>
+    {% endif %}
+
+    {% if musician.cash_app_url %}
+    <button class="donation-type" redirect="{{ musician.cash_app_url }}">
+      <img src="/static/images/cashapp.png" style="width: 120px;"/>
+    </button>
+    {% endif %}
   </div>
 
 </div>
@@ -90,6 +129,21 @@
 
               window.location.href = pathName + "?" + newSearchParams.toString();
           }
+      }
+
+      var redirect = document.getElementById('go-to-checkout');
+      redirect.onclick = function() {
+          const transactionCovered = document.getElementById('transaction-covered').checked;
+          const websiteDonation = document.getElementById('website-donation').checked;
+
+          let newSearchParams = new URLSearchParams();
+          newSearchParams.set("amount", amount);
+          newSearchParams.set("transactionCovered", transactionCovered);
+          newSearchParams.set("websiteDonation", websiteDonation);
+
+          const musicianName = window.location.pathname.split('/')[1];
+
+          window.location.href = `/${musicianName}/checkout/?` + newSearchParams.toString();
       }
 
     </script>

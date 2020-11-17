@@ -75,8 +75,8 @@
     {% endfor %}
 
     <span>
-      <input type="number" class="form-control custom-donation-amount" min="0.50" step="0.01" max="100">
-      <button class="donation-type custom-donation-button btn btn-light" amount="">
+      <input id="custom-donation-amount" type="text" class="form-control custom-donation-amount" min="0.50" step="0.01" max="100">
+      <button id="custom-donation-submit" class="donation-type custom-donation-button btn btn-light" amount="">
         Custom
       </button>
     </span>
@@ -89,19 +89,11 @@
 {% block addedjavascript %}
 
 <script type="text/javascript">
-  var buttons = document.getElementsByTagName("button");
-  for (i = 0; i < buttons.length; i++) {
-    const button = buttons[i];
-
-    if(button.classList.contains("custom-donation-amount")) {
-      continue;
-    }
-
-    button.addEventListener("click", function() {
-      var amount = this.getAttribute("amount");
-      document.location.href = `/checkout/?amount=${amount * 100}`;
-    });
-  }
+  const button = document.getElementById("custom-donation-submit");
+  button.addEventListener("click", function() {
+    var amount = document.getElementById("custom-donation-amount").value;
+    document.location.href = `${window.location.pathname}cart/?amount=${amount * 100}`;
+  });
 </script>
 
 {% endblock %}
