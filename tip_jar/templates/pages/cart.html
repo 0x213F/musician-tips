@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+
+{% block addedcss %}
+
+<style>
+
+  .donation-container {
+    max-width: 360px;
+    align-self: center;
+    margin: auto;
+  }
+
+  .result-message {
+    line-height: 22px;
+    font-size: 16px;
+  }
+
+  .result-message a {
+    color: rgb(89, 111, 214);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="donation-container">
+  <div style="width: 100%; height: 3rem;"></div>
+
+  <div class="card text-center">
+    <div class="card-header" style="padding-top: 1rem; padding-bottom: 1rem;">
+      <h3 style="margin-bottom: 0;">${{ total_amount }}</h3>
+      <hr>
+      <div style="text-align: left;">
+        <p style="margin-bottom: 0.25rem;"><small>${{ musician_amount }} is paid to <b>{{ musician.name }}</b></small></p>
+        <p style="margin-bottom: 0.25rem;"><small>${{ transaction_fee }} is paid as a transaction free</small></p>
+        <p style="margin-bottom: 0;"><small>${{ website_amount }} is paid to <b><i>musician.tips</i></b></small></p>
+      </div>
+    </div>
+    <div class="card-body">
+
+      <div class="form-group" style="margin-bottom: 0; text-align: left;">
+        <div class="form-check">
+          <input id="transaction-covered" class="form-check-input refresh-page" type="checkbox" {% if transaction_covered %}checked{% endif %}>
+          <label class="form-check-label" style="text-align: left;">
+            Cover the transaction fee
+          </label>
+        </div>
+        <div class="form-check">
+          <input id="website-donation" class="form-check-input refresh-page" type="checkbox" {% if website_donation %}checked{% endif %}>
+          <label class="form-check-label">
+            Donate $0.25 to <b><i>musician.tips</i></b>
+          </label>
+        </div>
+      </div>
+      <div style="width: 100%; height: 1.25rem;"></div>
+      <div class="form-group" style="margin-bottom: 0;">
+        <a href="#" class="btn btn-primary">Checkout</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+{% endblock %}
+
+{% block addedjavascript %}
+
+    <script type="text/javascript">
+
+      const pathName = window.location.pathname;
+      const queryString = window.location.search;
+      const urlParams = new URLSearchParams(queryString);
+      const amount = parseFloat(urlParams.get('amount'));
+
+      const buttons = document.getElementsByClassName('refresh-page');
+      for(let i = 0; i < buttons.length; i++) {
+          var button = buttons[i];
+          button.onclick = function() {
+              const transactionCovered = document.getElementById('transaction-covered').checked;
+              const websiteDonation = document.getElementById('website-donation').checked;
+
+              let newSearchParams = new URLSearchParams();
+              newSearchParams.set("amount", amount);
+              newSearchParams.set("transactionCovered", transactionCovered);
+              newSearchParams.set("websiteDonation", websiteDonation);
+
+              window.location.href = pathName + "?" + newSearchParams.toString();
+          }
+      }
+
+    </script>
+
+{% endblock %}

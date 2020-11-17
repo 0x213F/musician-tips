@@ -5,44 +5,51 @@
 <style>
 
   .donation-container {
-    max-width: 500px;
+    max-width: 360px;
     align-self: center;
     margin: auto;
-    margin-top: 2rem;
   }
 
   .donation-type {
-    width: calc(50% - 0.5rem);
+    width: 100%;
     height: 55px;
     float: left;
     margin-right: 1rem;
     margin-top: 1rem;
+    padding: 14px;
   }
 
-  @media screen and (max-width: 400px) {
-    .donation-type {
-      width: 100%;
-    }
-  }
-
-  .donation-type:last-child {
-    margin-right: 0rem;
-  }
-
-  .donation-button-container:first-child > .donation-type {
-    margin-top: 0rem;
-  }
-
-  .right-and-grey {
-    color: rgb(105, 115, 134);
+  .grey-subtitle {
     text-align: right;
-    font-size: 0.875rem;
+
     margin-top: 0.5rem;
-    margin-bottom: 1.5rem;  /* + 0.5 rem */
+    margin-bottom: 0.5rem;  /* + 0.5 rem */
   }
 
-  .musician-name {
-    font-size: 1.5rem;
+  .email-receipt {
+    position: absolute;
+    float: left;
+    width: max-content;
+    margin-left: 40px;
+    margin-top: -1px;
+    font-size: 13px;
+    color: rgb(105, 115, 134);
+  }
+
+  .custom-donation-amount {
+    margin-top: 1rem;
+    width: 6rem;
+    height: 55px;
+    text-align: center;
+    float: left;
+  }
+
+  .custom-donation-button {
+    margin: 1rem 0 0 1rem;
+    height: 55px;
+    text-align: center;
+    width: calc(100% - 7rem);
+    float: right;
   }
 
 </style>
@@ -53,29 +60,28 @@
 
 <div class="donation-container">
 
-  <p class="musician-name"><b>{{ musician.name }}</b></p>
-
-  <p class="right-and-grey">Please choose a donation amount.</p>
-
-  <div class="donation-button-container">
-    <button class="donation-type" amount="5">
-      $5
-    </button>
-
-    <button class="donation-type" amount="10">
-      $10
-    </button>
-  </div>
+  <div style="width: 100%; height: 3rem;"></div>
+  <p class="aligned-right">Thank you for listening.</p>
+  <p class="text-muted aligned-right">Select a contribution amount towards {{ musician.name }}'s performance.</p>
+  <div style="width: 100%; height: 1rem;"></div>
 
   <div class="donation-button-container">
-    <button class="donation-type" amount="20">
-      $20
-    </button>
+    {% for amount_choice in amount_choices %}
 
-    <button class="donation-type" amount="50">
-      $50
-    </button>
+      <a href="/{{ musician.username }}/cart?amount={{ amount_choice }}00" class="donation-type btn btn-secondary" amount="{{ amount_choice }}">
+        ${{ amount_choice }}
+      </a>
+
+    {% endfor %}
+
+    <span>
+      <input type="number" class="form-control custom-donation-amount" min="0.50" step="0.01" max="100">
+      <button class="donation-type custom-donation-button btn btn-light" amount="">
+        Custom
+      </button>
+    </span>
   </div>
+
 </div>
 
 {% endblock %}
@@ -85,9 +91,15 @@
 <script type="text/javascript">
   var buttons = document.getElementsByTagName("button");
   for (i = 0; i < buttons.length; i++) {
-    buttons[i].addEventListener("click", function() {
+    const button = buttons[i];
+
+    if(button.classList.contains("custom-donation-amount")) {
+      continue;
+    }
+
+    button.addEventListener("click", function() {
       var amount = this.getAttribute("amount");
-      document.location.href = `../checkout/?amount=${amount}`;
+      document.location.href = `/checkout/?amount=${amount * 100}`;
     });
   }
 </script>

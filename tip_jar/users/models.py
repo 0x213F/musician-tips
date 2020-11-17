@@ -27,3 +27,6 @@ class User(AbstractUser):
     cash_app_url = models.URLField(max_length=200, blank=True, null=True)
     paypal_url = models.URLField(max_length=200, blank=True, null=True)
     has_stripe_enabled = models.BooleanField(default=False, blank=True)
+
+    def __str__(self):
+        return self.name

@@ -22,6 +22,8 @@ class StripeWebhookView(BaseView):
         sig_header = request.META['HTTP_STRIPE_SIGNATURE']
         event = None
 
+        print(request.body)
+
         try:
             event = stripe.Webhook.construct_event(
                 payload, sig_header, settings.STRIPE_ENDPOINT_SECRET
@@ -37,6 +39,7 @@ class StripeWebhookView(BaseView):
         amount = event.data.object['amount']
         try:
             username = event.data.object['metadata']['musician']
+            print(event.data.object)
             user = User.objects.get(username=username)
         except (KeyError, User.DoesNotExist):
             user = None
