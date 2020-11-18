@@ -3,7 +3,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 from tip_jar.payments.views import (
     GetRecentlyPaidUsersView,
-    StripeCreateIntentView,
     StripeWebhookView,
 )
 
@@ -14,11 +13,6 @@ urlpatterns = [
         "get-recently-paid-users/",
         view=GetRecentlyPaidUsersView.as_view(),
         name="get-recently-paid-users",
-    ),
-    path(
-        "stripe/create-intent/",
-        view=StripeCreateIntentView.as_view(),
-        name="redirect"
     ),
     path(
         "stripe/webhook/",

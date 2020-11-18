@@ -1,3 +1,2 @@
 from .get_recently_paid_users_view import GetRecentlyPaidUsersView
-from .stripe_create_intent_view import StripeCreateIntentView
 from .stripe_webhook_view import StripeWebhookView

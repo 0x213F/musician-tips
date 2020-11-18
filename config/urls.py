@@ -20,6 +20,7 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # API
     path("api/payments/", include("tip_jar.payments.urls", namespace="payments")),
+    path("api/communications/", include("tip_jar.communications.urls", namespace="communications")),
     # Application
     path("<str:musician>/", MusicianChooseView.as_view(), name="donate"),
     path("<str:musician>/cart/", MusicianCartView.as_view(), name="cart"),

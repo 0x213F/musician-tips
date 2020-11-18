@@ -402,7 +402,7 @@
         document.querySelector("#button-text").classList.remove("hidden");
 
         const request = new Request(
-          "../communications/subscription/create",
+          "../../api/communications/subscription/create/",
           {headers: {"X-CSRFToken": CSRF_TOKEN}}
         );
 
