@@ -5,7 +5,7 @@
 <style>
 
   .donation-container {
-    max-width: 360px;
+    max-width: 415px;
     align-self: center;
     margin: auto;
   }
@@ -63,7 +63,7 @@
         <div class="form-check">
           <input id="website-donation" class="form-check-input refresh-page" type="checkbox" {% if website_donation %}checked{% endif %}>
           <label class="form-check-label">
-            Donate $0.25 to <b><i>musician.tips</i></b>
+            Contribute $0.25 to the <nobr><a href="/faq/dividend/"><b><i>musician.tips</i> dividend</b></a></nobr>
           </label>
         </div>
       </div>
@@ -76,31 +76,25 @@
 
   <div style="width: 100%; height: 155px;"></div>
 
+  {% if musician.venmo_url or musician.cash_app_url or musician.paypal_url %}
   <div class="dropup">
     <a class="btn btn-link dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
       Other payment options
     </a>
 
     <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <a class="dropdown-item" href="#" style="padding-top: 10px; padding-bottom: 12px;"><img src="/static/images/venmo.png" style="height: 15px;"/></a>
-      <a class="dropdown-item" href="#" style="padding-top: 7px; padding-bottom: 7px;"><img src="/static/images/cashapp.png" style="height: 26px;"/></a>
-      <a class="dropdown-item" href="#" style="padding-top: 5px; padding-bottom: 5px;"><img src="/static/images/paypal.svg" style="height: 30px;"/></a>
+      {% if musician.venmo_url %}
+      <a class="dropdown-item" href="{{ musician.venmo_url }}" target="_blank" style="padding-top: 10px; padding-bottom: 12px;"><img src="/static/images/venmo.png" style="height: 15px;"/></a>
+      {% endif %}
+      {% if musician.cash_app_url %}
+      <a class="dropdown-item" href="{{ musician.cash_app_url }}" target="_blank" style="padding-top: 7px; padding-bottom: 7px;"><img src="/static/images/cashapp.png" style="height: 26px;"/></a>
+      {% endif %}
+      {% if musician.paypal_url %}
+      <a class="dropdown-item" href="{{ musician.paypal_url }}" target="_blank" style="padding-top: 5px; padding-bottom: 5px;"><img src="/static/images/paypal.svg" style="height: 30px;"/></a>
+      {% endif %}
     </div>
   </div>
-
-  <div class="donation-button-container">
-    {% if musician.venmo_url %}
-    <button class="donation-type" redirect="{{ musician.venmo_url }}">
-      <img src="/static/images/venmo.png" style="width: 90px;"/>
-    </button>
-    {% endif %}
-
-    {% if musician.cash_app_url %}
-    <button class="donation-type" redirect="{{ musician.cash_app_url }}">
-      <img src="/static/images/cashapp.png" style="width: 120px;"/>
-    </button>
-    {% endif %}
-  </div>
+  {% endif %}
 
 </div>
 

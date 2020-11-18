@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+
+{% block addedcss %}
+
+<style>
+
+  .donation-container {
+    max-width: 415px;
+    align-self: center;
+    margin: auto;
+  }
+
+  .result-message {
+    line-height: 22px;
+    font-size: 16px;
+  }
+
+  .result-message a {
+    color: rgb(89, 111, 214);
+    font-weight: 600;
+    text-decoration: none;
+  }
+
+  /* Not Stripe styles */
+
+  .email-input {
+    width: 100%;
+  }
+
+  .stamp {
+    /* transform: rotate(12deg); */
+  	color: #555;
+  	font-size: 3rem;
+  	font-weight: 700;
+  	border: 0.25rem solid #555;
+  	display: inline-block;
+  	padding: 0.25rem 1rem;
+  	text-transform: uppercase;
+  	border-radius: 1rem;
+  	font-family: 'Courier';
+  	/* -webkit-mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png');
+    -webkit-mask-size: 944px 604px;
+    mix-blend-mode: multiply; */
+  }
+
+  .is-approved {
+  	color: #0A9928;
+    background-color: rgb(256, 256, 256, 0.90);
+    backdrop-filter: blur(12px);
+  	border: 0.5rem solid #0A9928;
+  	/* -webkit-mask-position: 13rem 6rem; */
+  	transform: rotate(-14deg);
+    position: absolute;
+    display: flex;
+    align-items: center; /** Y-axis align **/
+    justify-content: center; /** X-axis align **/
+    left: 3rem;
+    position: relative;
+    width: calc(100% - 6rem);
+    text-align: center;
+  }
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="donation-container">
+  <div style="width: 100%; height: 3rem;"></div>
+
+  <div class="card text-center">
+    <div class="card-header" style="padding-top: 1rem; padding-bottom: 1rem; border-bottom: 0;">
+      <h3 style="margin-bottom: 0;">${{ total_amount }}</h3>
+      <hr>
+      <div style="text-align: left;">
+        <p style="margin-bottom: 0.25rem;"><small>${{ musician_amount }} was paid to <b>{{ musician.name }}</b></small></p>
+        <p style="margin-bottom: 0.25rem;"><small>${{ transaction_fee }} was paid as a transaction free</small></p>
+        <p style="margin-bottom: 0;"><small>${{ website_amount }} was paid to <b><i>musician.tips</i></b></small></p>
+      </div>
+    </div>
+  </div>
+
+  <div style="width: 100%; height: 6rem;"></div>
+
+  <span id="paid-stamp" class="stamp is-approved">Paid</span>
+
+</div>
+
+{% endblock %}
+
+{% block addedjavascript %}
+
+{% endblock %}

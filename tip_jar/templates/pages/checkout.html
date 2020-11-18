@@ -5,7 +5,7 @@
 <style>
 
   .donation-container {
-    max-width: 360px;
+    max-width: 415px;
     align-self: center;
     margin: auto;
   }
@@ -60,13 +60,13 @@
     border-top-right-radius: 0;
     border-top-left-radius: 0;
   }
-  .stripe-button:hover {
+  /* .stripe-button:hover {
     filter: contrast(115%);
   }
   .stripe-button:disabled {
     opacity: 0.5;
     cursor: default;
-  }
+  } */
 
   /* spinner/processing state, errors */
   .spinner,
@@ -145,6 +145,42 @@
   .email-input {
     width: 100%;
   }
+
+  .stamp {
+    /* transform: rotate(12deg); */
+  	color: #555;
+  	font-size: 3rem;
+  	font-weight: 700;
+  	border: 0.25rem solid #555;
+  	display: inline-block;
+  	padding: 0.25rem 1rem;
+  	text-transform: uppercase;
+  	border-radius: 1rem;
+  	font-family: 'Courier';
+  	/* -webkit-mask-image: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/8399/grunge.png');
+    -webkit-mask-size: 944px 604px;
+    mix-blend-mode: multiply; */
+  }
+
+  .is-approved {
+  	color: #0A9928;
+    background-color: rgb(256, 256, 256, 0.90);
+    backdrop-filter: blur(12px);
+  	border: 0.5rem solid #0A9928;
+  	/* -webkit-mask-position: 13rem 6rem; */
+  	transform: rotate(-14deg);
+    position: absolute;
+    display: flex;
+    align-items: center; /** Y-axis align **/
+    justify-content: center; /** X-axis align **/
+
+    top: -108px;
+    left: 16px;
+    position: relative;
+    width: calc(100% - 3rem);
+    text-align: center;
+  }
+
 </style>
 
 {% endblock %}
@@ -173,7 +209,7 @@
 
       <div class="form-group">
         <div class="form-check" style="padding-left: 0;">
-          <input type="text" class="form-control email-input" placeholder="Email address">
+          <input id="email" type="email" class="form-control email-input" placeholder="Email address">
         </div>
       </div>
 
@@ -188,13 +224,13 @@
 
       <div class="form-group" style="margin-bottom: 0;">
         <div class="form-check" style="padding-bottom: 0.25rem">
-          <input class="form-check-input" type="checkbox">
+          <input id="allow-musician-to-contact-me" class="form-check-input" type="checkbox">
           <label class="form-check-label">
             Allow <b>{{ musician.name }}</b> to contact me
           </label>
         </div>
         <div class="form-check">
-          <input class="form-check-input" type="checkbox">
+          <input id="allow-website-to-contact-me" class="form-check-input" type="checkbox">
           <label class="form-check-label">
             Subscribe to <b><i>musician.tips</i></b>
           </label>
@@ -214,6 +250,7 @@
     <p id="card-error" role="alert"></p>
     <p id="card-success" role="alert"></p>
   </form>
+  <span id="paid-stamp" class="stamp is-approved" style="display: none;">Paid</span>
 
 </div>
 
@@ -253,7 +290,7 @@
       var style = {
         base: {
           color: "#212529",
-          fontFamily: '-apple-system, Arial, sans-serif',
+          fontFamily: 'Roboto, sans-serif',
           fontSmoothing: "antialiased",
           fontSize: "16px",
           "::placeholder": {
@@ -275,7 +312,7 @@
         "../../payments/stripe/create-intent/",
         {headers: {"X-CSRFToken": CSRF_TOKEN}}
       );
-      (function(response) {
+      (function() {
 
         // Verify status
         if(!CLIENT_SECRET) {
@@ -311,9 +348,20 @@
 
       // Submit payment
       var payWithCard = function(stripe, card, clientSecret) {
+
+        const emailField = document.getElementById('email');
+        const isValidEmail = Boolean(emailField.value) && emailField.checkValidity();
+        if(!isValidEmail) {
+          let errorMsg = document.querySelector("#card-error");
+          errorMsg.textContent = 'Your email address is incomplete.';
+          emailField.classList.add('border-danger');
+          return;
+        }
+
         loading(true);
         stripe
           .confirmCardPayment(clientSecret, {
+            receipt_email: emailField.value,
             payment_method: {
               card: card
             }
@@ -329,6 +377,15 @@
           });
       };
 
+      const emailField = document.getElementById('email');
+      emailField.onclick = function() {
+        emailField.classList.remove('border-danger');
+        let errorMsg = document.querySelector("#card-error");
+        if(errorMsg.textContent === 'Your email address is incomplete.') {
+          errorMsg.textContent = '';
+        }
+      }
+
       // Handle error
       var showError = function(errorMsgText) {
         loading(false);
@@ -336,15 +393,50 @@
         errorMsg.textContent = errorMsgText;
         setTimeout(function() {
           errorMsg.textContent = "";
-        }, 8000);
+        }, 4000);
       };
 
       // Handle success
       var showSuccess = function() {
-        document.querySelector("#button-text").textContent = "Ba Dum (Cha-Ching)!";
         document.querySelector("#spinner").classList.add("hidden");
         document.querySelector("#button-text").classList.remove("hidden");
-        document.querySelector("#card-success").innerHTML = `<a href="/">Back to homepage</a>`;
+
+        const request = new Request(
+          "../communications/subscription/create",
+          {headers: {"X-CSRFToken": CSRF_TOKEN}}
+        );
+
+        const subscriptionEmail = document.getElementById('email').value
+        const musicianName = window.location.pathname.split('/')[1];
+        let promises = [];
+
+        let checkbox = document.getElementById('allow-musician-to-contact-me');
+        if(checkbox.checked) {
+          promises.push(
+            fetch(request, {
+              method: "POST",
+              mode: "same-origin",
+              body: JSON.stringify({'musicianUsername': musicianName, 'subscriptionEmail': subscriptionEmail}),
+            })
+          )
+        }
+
+        checkbox = document.getElementById('allow-website-to-contact-me');
+        if(checkbox.checked) {
+          promises.push(
+            fetch(request, {
+              method: "POST",
+              mode: "same-origin",
+              body: JSON.stringify({'musicianUsername': 'admin', 'subscriptionEmail': subscriptionEmail}),
+            })
+          )
+        }
+
+        Promise.all(promises).then(
+          () => {
+            document.location.href = `/${musicianName}/receipt/${window.location.search};`
+          }
+        );
       }
 
 

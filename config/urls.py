@@ -10,6 +10,7 @@ from .views import (
     MusicianDonateView,
     MusicianChooseView,
     MusicianCheckoutView,
+    MusicianReceiptView,
 )
 
 urlpatterns = [
@@ -27,6 +28,9 @@ urlpatterns = [
     ),
     path(
         "<str:musician>/checkout/", MusicianCheckoutView.as_view(), name="checkout"
+    ),
+    path(
+        "<str:musician>/receipt/", MusicianReceiptView.as_view(), name="receipt"
     ),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

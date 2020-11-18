@@ -16,7 +16,7 @@
     max-width: 500px;
     align-self: center;
     margin: auto;
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
 
   .donation-type {
@@ -46,13 +46,27 @@
     justify-content: space-between;
   }
 
-  .right-and-grey {
-    color: #DDD;
+  .right {
     text-align: right;
     font-size: 0.875rem;
     margin-top: 0.5rem;
     margin-bottom: 1.5rem;  /* + 0.5 rem */
   }
+
+  img {
+    image-rendering: optimizeSpeed;             /* STOP SMOOTHING, GIVE ME SPEED  */
+    image-rendering: -moz-crisp-edges;          /* Firefox                        */
+    image-rendering: -o-crisp-edges;            /* Opera                          */
+    image-rendering: -webkit-optimize-contrast; /* Chrome (and eventually Safari) */
+    image-rendering: pixelated; /* Chrome */
+    image-rendering: optimize-contrast;         /* CSS3 Proposed                  */
+    -ms-interpolation-mode: nearest-neighbor;   /* IE8+                           */
+
+    position: absolute;
+    bottom: 3rem;
+    height: 36px;
+    margin: auto;
+}
 
 </style>
 
@@ -63,7 +77,13 @@
 <div class="donation-container">
 
   <p><b>Hello, San Francisco 👋</b></p>
-  <p class="right-and-grey">(Thank you for supporting live music)</p>
+  <p class="right text-muted">Thank you for supporting live music.</p>
+
+  <p style="text-align: center;">
+    <a href="https://0x213f.com">
+      <img src="/static/images/0x213F.png" />
+    </a>
+  </p>
 
 </div>
 
