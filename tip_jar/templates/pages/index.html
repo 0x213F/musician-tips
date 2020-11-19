@@ -90,36 +90,4 @@
 {% endblock %}
 
 {% block addedjavascript %}
-
-<script type="text/javascript">
-  // Create payment intent
-  const request = new Request(
-    "/api/payments/get-recently-paid-users/",
-    {headers: {"X-CSRFToken": CSRF_TOKEN}}
-  );
-  fetch(request, {
-    method: "GET",
-    mode: "same-origin",
-  })
-    .then(function(result) {
-      return result.json();
-    })
-    .then(function(response) {
-
-      console.log(response)
-
-      // Verify status
-      if(response.system.status !== 200) {
-        return;
-      }
-
-      const recentlyPaidUsers = response.data.recentlyPaidUsers;
-
-
-    })
-    .catch(function() {
-      // TODO
-    });
-</script>
-
 {% endblock %}

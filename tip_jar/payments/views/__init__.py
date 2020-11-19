@@ -1,2 +1,1 @@
-from .get_recently_paid_users_view import GetRecentlyPaidUsersView
 from .stripe_webhook_view import StripeWebhookView

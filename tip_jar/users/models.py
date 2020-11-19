@@ -6,9 +6,9 @@ from django.utils.translation import gettext_lazy as _
 from unique_upload import unique_upload
 
 
-def upload_to_comments_voice_recordings(*args, **kwargs):
+def upload_to_users_user_profile_img(*args, **kwargs):
     return (
-        f"django-storage/comments/voice-recordings/audios/"
+        f"django-storage/users/users/profile-imgs/"
         f"{unique_upload(*args, **kwargs)}"
     )
 
@@ -18,7 +18,7 @@ class User(AbstractUser):
 
     name = models.CharField(max_length=280)
 
-    profile_img = models.FileField(upload_to=upload_to_comments_voice_recordings, null=True, blank=True)
+    profile_img = models.FileField(upload_to=upload_to_users_user_profile_img, null=True, blank=True)
 
     #: First and last name do not cover name patterns around the globe
     landing_text = models.CharField(default="Thank you for listening. Gracias por su atención.", blank=True, max_length=140)

@@ -45,11 +45,11 @@ class BaseView(View):
         """
         return HttpResponseForbidden(message)
 
-    # def http_response_422(self, message):
-    #     '''
-    #     INVALID FORMAT
-    #     '''
-    #     return HttpResponse(status_code=422, message=message)
+    def http_response_422(self, message):
+        '''
+        INVALID FORMAT
+        '''
+        return HttpResponse(status_code=422, message=message)
 
     def template_response(self, request, template, context={}):
         return TemplateResponse(request, template, context)

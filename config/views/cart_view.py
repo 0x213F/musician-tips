@@ -3,20 +3,24 @@ from decimal import Decimal
 
 from django.contrib.auth import get_user_model
 
+from config import utils as config_utils
 from tip_jar.core.base_view import BaseView
 
 User = get_user_model()
-
-
-def get_transaction_fee(total_amount):
-    return ((total_amount) * Decimal('0.029') + Decimal('0.3')).quantize(Decimal('0.01'), rounding=decimal.ROUND_HALF_UP)
 
 
 class MusicianCartView(BaseView):
 
     def get(self, request, musician, **kwargs):
         """
-        Load musician homepage.
+        After the user has selected a donation amount, show them the cart view.
+
+          - musician_amount: initial amount pledge.
+          - website_donation: opt in to donating to the Musician Tips Dividend.
+          - transaction_covered: opt in to covering the transaction fees.
+          - total_amount: the final total bill.
+          - transaction_fee: how much goes to Stripe.
+          - website_amount: how much goes to the Musician Tips Dividend.
         """
         user = User.objects.get(username=musician)
 
@@ -24,31 +28,13 @@ class MusicianCartView(BaseView):
         website_donation = request.GET.get('websiteDonation', False) == 'true'
         transaction_covered = request.GET.get('transactionCovered', False) == 'true'
 
-        if website_donation:
-            website_amount = Decimal('0.25')
-        else:
-            website_amount = Decimal('0.00')
-
-
-        musician_amount = Decimal(musician_amount) / Decimal('100')
-
-        if transaction_covered:
-            total_amount = musician_amount + website_amount
-            proposed_total = total_amount
-            while True:
-                proposed_total += Decimal('0.01')
-                proposed_transaction_fee = proposed_total - total_amount
-                actual_transaction_fee = get_transaction_fee(proposed_total)
-                if actual_transaction_fee <= proposed_transaction_fee:
-                    break
-            transaction_fee = get_transaction_fee(proposed_total)
-            musician_amount = proposed_total - website_amount - transaction_fee
-
-        else:
-            transaction_fee = get_transaction_fee(musician_amount + website_amount)
-            musician_amount -= transaction_fee
-
-        total_amount = musician_amount + website_amount + transaction_fee
+        total_amount, musician_amount, transaction_fee, website_amount = (
+            config_utils.get_checkout_total(
+                musician_amount,
+                website_donation,
+                transaction_covered,
+            )
+        )
 
         return self.template_response(request, "pages/cart.html", {
             "musician": user,

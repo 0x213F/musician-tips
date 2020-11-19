@@ -7,9 +7,8 @@ from django.views.generic import TemplateView
 
 from .views import (
     MusicianCartView,
-    MusicianDonateView,
-    MusicianChooseView,
     MusicianCheckoutView,
+    MusicianChooseView,
     MusicianReceiptView,
 )
 
@@ -25,9 +24,6 @@ urlpatterns = [
     # Application
     path("<str:musician>/", MusicianChooseView.as_view(), name="donate"),
     path("<str:musician>/cart/", MusicianCartView.as_view(), name="cart"),
-    path(
-        "<str:musician>/choose/", MusicianDonateView.as_view(), name="choose"
-    ),
     path(
         "<str:musician>/checkout/", MusicianCheckoutView.as_view(), name="checkout"
     ),

@@ -10,7 +10,8 @@ class MusicianChooseView(BaseView):
 
     def get(self, request, musician, **kwargs):
         """
-        Load musician homepage.
+        Load a musician's homepage. It displays custom amount choices that the
+        musician has set up.
         """
         AmountChoice = apps.get_model("payments", "AmountChoice")
 
