@@ -23,7 +23,7 @@ django.setup()
 
 # -- Project information -----------------------------------------------------
 
-project = "Tip Jar"
+project = "Musician Tips"
 copyright = """2020, 0x213F"""
 author = "0x213F"
 

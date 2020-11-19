@@ -13,7 +13,7 @@ def upload_to_users_user_profile_img(*args, **kwargs):
 
 
 class User(AbstractUser):
-    """Default user for Tip Jar."""
+    """Default user for Musician Tips."""
 
     profile_img = models.FileField(
         upload_to=upload_to_users_user_profile_img, null=True, blank=True

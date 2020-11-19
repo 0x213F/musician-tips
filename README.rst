@@ -1,7 +1,7 @@
-Tip Jar
+Musician Tips
 =======
 
-Tip jar for musicians
+Supporting live music in San Francisco
 
 .. image:: https://img.shields.io/badge/built%20with-Cookiecutter%20Django-ff69b4.svg
      :target: https://github.com/pydanny/cookiecutter-django/
@@ -84,6 +84,3 @@ Docker
 See detailed `cookiecutter-django Docker documentation`_.
 
 .. _`cookiecutter-django Docker documentation`: http://cookiecutter-django.readthedocs.io/en/latest/deployment-with-docker.html
-
-
-

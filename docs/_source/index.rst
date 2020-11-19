@@ -1,9 +1,9 @@
-.. Tip Jar documentation master file, created by
+.. Musician Tips documentation master file, created by
    sphinx-quickstart.
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to Tip Jar's documentation!
+Welcome to Musician Tips's documentation!
 ======================================================================
 
 .. toctree::

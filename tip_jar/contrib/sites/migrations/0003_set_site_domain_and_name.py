@@ -13,8 +13,8 @@ def update_site_forward(apps, schema_editor):
     Site.objects.update_or_create(
         id=settings.SITE_ID,
         defaults={
-            "domain": "drum.tips",
-            "name": "Tip Jar",
+            "domain": "musician.tips",
+            "name": "Musician Tips",
         },
     )
 
