@@ -12,18 +12,17 @@ User = get_user_model()
 
 class SubscriptionCreateView(BaseView):
     def post(self, request, **kwargs):
-        """
-        """
-        Subscription = apps.get_model('communications', 'Subscription')
+        """"""
+        Subscription = apps.get_model("communications", "Subscription")
 
         data = json.loads(request.body.decode("utf-8"))
 
-        musician_username = data['musicianUsername']
+        musician_username = data["musicianUsername"]
         user = User.objects.get(username=musician_username)
 
         Subscription.objects.create(
             user=user,
-            email=data['subscriptionEmail'],
+            email=data["subscriptionEmail"],
         )
 
         return self.http_response_200({})

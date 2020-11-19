@@ -11,6 +11,6 @@ urlpatterns = [
     path(
         "stripe/webhook/",
         view=csrf_exempt(StripeWebhookView.as_view()),
-        name="redirect"
+        name="redirect",
     ),
 ]

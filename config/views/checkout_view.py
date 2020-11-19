@@ -11,7 +11,6 @@ stripe.api_key = settings.STRIPE_API_KEY
 
 
 class MusicianCheckoutView(BaseView):
-
     def get(self, request, musician, **kwargs):
         """
         By now the user has finalized their cart selection.
@@ -26,31 +25,38 @@ class MusicianCheckoutView(BaseView):
         """
         user = User.objects.get(username=musician)
 
-        musician_amount = request.GET.get('amount')
-        website_donation = request.GET.get('websiteDonation', False) == 'true'
-        transaction_covered = request.GET.get('transactionCovered', False) == 'true'
+        musician_amount = request.GET.get("amount")
+        website_donation = request.GET.get("websiteDonation", False) == "true"
+        transaction_covered = request.GET.get("transactionCovered", False) == "true"
 
-        total_amount, musician_amount, transaction_fee, website_amount = (
-            config_utils.get_checkout_total(
-                musician_amount,
-                website_donation,
-                transaction_covered,
-            )
+        (
+            total_amount,
+            musician_amount,
+            transaction_fee,
+            website_amount,
+        ) = config_utils.get_checkout_total(
+            musician_amount,
+            website_donation,
+            transaction_covered,
         )
 
         intent = stripe.PaymentIntent.create(
-            amount=int(total_amount * Decimal('100')),
+            amount=int(total_amount * Decimal("100")),
             currency="usd",
-            metadata={'musician': musician},
+            metadata={"musician": musician},
         )
 
-        return self.template_response(request, "pages/checkout.html", {
-            "client_secret": intent["client_secret"],
-            "musician": user,
-            "total_amount": total_amount,
-            "musician_amount": musician_amount,
-            "transaction_fee": transaction_fee,
-            "transaction_covered": transaction_covered,
-            "website_amount": website_amount,
-            "website_donation": website_donation,
-        })
+        return self.template_response(
+            request,
+            "pages/checkout.html",
+            {
+                "client_secret": intent["client_secret"],
+                "musician": user,
+                "total_amount": total_amount,
+                "musician_amount": musician_amount,
+                "transaction_fee": transaction_fee,
+                "transaction_covered": transaction_covered,
+                "website_amount": website_amount,
+                "website_donation": website_donation,
+            },
+        )

@@ -8,8 +8,7 @@ from unique_upload import unique_upload
 
 def upload_to_users_user_profile_img(*args, **kwargs):
     return (
-        f"django-storage/users/users/profile-imgs/"
-        f"{unique_upload(*args, **kwargs)}"
+        f"django-storage/users/users/profile-imgs/" f"{unique_upload(*args, **kwargs)}"
     )
 
 
@@ -18,10 +17,16 @@ class User(AbstractUser):
 
     name = models.CharField(max_length=280)
 
-    profile_img = models.FileField(upload_to=upload_to_users_user_profile_img, null=True, blank=True)
+    profile_img = models.FileField(
+        upload_to=upload_to_users_user_profile_img, null=True, blank=True
+    )
 
     #: First and last name do not cover name patterns around the globe
-    landing_text = models.CharField(default="Thank you for listening. Gracias por su atención.", blank=True, max_length=140)
+    landing_text = models.CharField(
+        default="Thank you for listening. Gracias por su atención.",
+        blank=True,
+        max_length=140,
+    )
 
     venmo_url = models.URLField(max_length=200, blank=True, null=True)
     cash_app_url = models.URLField(max_length=200, blank=True, null=True)

@@ -7,7 +7,6 @@ User = get_user_model()
 
 
 class MusicianChooseView(BaseView):
-
     def get(self, request, musician, **kwargs):
         """
         Load a musician's homepage. It displays custom amount choices that the
@@ -17,14 +16,16 @@ class MusicianChooseView(BaseView):
 
         user = User.objects.get(username=musician)
         amount_choices = (
-            AmountChoice
-            .objects
-            .filter(user=user)
+            AmountChoice.objects.filter(user=user)
             .order_by("amount")
             .values_list("amount", flat=True)
         )
 
-        return self.template_response(request, "pages/choose.html", {
-            "musician": user,
-            "amount_choices": amount_choices,
-        })
+        return self.template_response(
+            request,
+            "pages/choose.html",
+            {
+                "musician": user,
+                "amount_choices": amount_choices,
+            },
+        )

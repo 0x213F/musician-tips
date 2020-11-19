@@ -10,7 +10,6 @@ User = get_user_model()
 
 
 class MusicianCartView(BaseView):
-
     def get(self, request, musician, **kwargs):
         """
         After the user has selected a donation amount, show them the cart view.
@@ -24,24 +23,31 @@ class MusicianCartView(BaseView):
         """
         user = User.objects.get(username=musician)
 
-        musician_amount = request.GET.get('amount')
-        website_donation = request.GET.get('websiteDonation', False) == 'true'
-        transaction_covered = request.GET.get('transactionCovered', False) == 'true'
+        musician_amount = request.GET.get("amount")
+        website_donation = request.GET.get("websiteDonation", False) == "true"
+        transaction_covered = request.GET.get("transactionCovered", False) == "true"
 
-        total_amount, musician_amount, transaction_fee, website_amount = (
-            config_utils.get_checkout_total(
-                musician_amount,
-                website_donation,
-                transaction_covered,
-            )
+        (
+            total_amount,
+            musician_amount,
+            transaction_fee,
+            website_amount,
+        ) = config_utils.get_checkout_total(
+            musician_amount,
+            website_donation,
+            transaction_covered,
         )
 
-        return self.template_response(request, "pages/cart.html", {
-            "musician": user,
-            "total_amount": total_amount,
-            "musician_amount": musician_amount,
-            "transaction_fee": transaction_fee,
-            "transaction_covered": transaction_covered,
-            "website_amount": website_amount,
-            "website_donation": website_donation,
-        })
+        return self.template_response(
+            request,
+            "pages/cart.html",
+            {
+                "musician": user,
+                "total_amount": total_amount,
+                "musician_amount": musician_amount,
+                "transaction_fee": transaction_fee,
+                "transaction_covered": transaction_covered,
+                "website_amount": website_amount,
+                "website_donation": website_donation,
+            },
+        )

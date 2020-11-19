@@ -23,7 +23,7 @@ class Subscription(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        unique_together = ['user', 'email']
+        unique_together = ["user", "email"]
 
     def __str__(self):
         return f"[{self.user}] {self.email}"

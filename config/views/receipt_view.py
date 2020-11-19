@@ -11,7 +11,6 @@ User = get_user_model()
 
 
 class MusicianReceiptView(BaseView):
-
     def get(self, request, musician, **kwargs):
         """
         Shown after the payment is successful.
@@ -26,24 +25,31 @@ class MusicianReceiptView(BaseView):
         """
         user = User.objects.get(username=musician)
 
-        musician_amount = request.GET.get('amount')
-        website_donation = request.GET.get('websiteDonation', False) == 'true'
-        transaction_covered = request.GET.get('transactionCovered', False) == 'true'
+        musician_amount = request.GET.get("amount")
+        website_donation = request.GET.get("websiteDonation", False) == "true"
+        transaction_covered = request.GET.get("transactionCovered", False) == "true"
 
-        total_amount, musician_amount, transaction_fee, website_amount = (
-            config_utils.get_checkout_total(
-                musician_amount,
-                website_donation,
-                transaction_covered,
-            )
+        (
+            total_amount,
+            musician_amount,
+            transaction_fee,
+            website_amount,
+        ) = config_utils.get_checkout_total(
+            musician_amount,
+            website_donation,
+            transaction_covered,
         )
 
-        return self.template_response(request, "pages/receipt.html", {
-            "musician": user,
-            "total_amount": total_amount,
-            "musician_amount": musician_amount,
-            "transaction_fee": transaction_fee,
-            "transaction_covered": transaction_covered,
-            "website_amount": website_amount,
-            "website_donation": website_donation,
-        })
+        return self.template_response(
+            request,
+            "pages/receipt.html",
+            {
+                "musician": user,
+                "total_amount": total_amount,
+                "musician_amount": musician_amount,
+                "transaction_fee": transaction_fee,
+                "transaction_covered": transaction_covered,
+                "website_amount": website_amount,
+                "website_donation": website_donation,
+            },
+        )

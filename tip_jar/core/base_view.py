@@ -20,13 +20,13 @@ class BaseView(View):
         SUCCESS
         """
         response = {
-            'system': {
-                'status': 200,
-                'message': 'Ok',
+            "system": {
+                "status": 200,
+                "message": "Ok",
             },
         }
         if data:
-            response['data'] = data
+            response["data"] = data
         if type(response) == dict:
             return JsonResponse(response)
         if type(response) == list:
@@ -46,9 +46,9 @@ class BaseView(View):
         return HttpResponseForbidden(message)
 
     def http_response_422(self, message):
-        '''
+        """
         INVALID FORMAT
-        '''
+        """
         return HttpResponse(status_code=422, message=message)
 
     def template_response(self, request, template, context={}):

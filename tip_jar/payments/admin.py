@@ -9,9 +9,8 @@ class PaymentAdmin(admin.ModelAdmin):
 
 @admin.register(apps.get_model("payments", "AmountChoice"))
 class AmountChoiceAdmin(admin.ModelAdmin):
-
     def get_queryset(self, request):
         AmountChoice = apps.get_model("payments", "AmountChoice")
         qs = AmountChoice.objects.all()
-        qs = qs.order_by('amount')
+        qs = qs.order_by("amount")
         return qs

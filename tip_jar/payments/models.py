@@ -16,7 +16,9 @@ import pgtrigger
 class Payment(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(
+        "users.User", on_delete=models.CASCADE, null=True, blank=True
+    )
 
     amount = models.DecimalField(max_digits=6, decimal_places=2)
 
@@ -29,7 +31,9 @@ class Payment(models.Model):
 class AmountChoice(models.Model):
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
-    user = models.ForeignKey("users.User", on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(
+        "users.User", on_delete=models.CASCADE, null=True, blank=True
+    )
 
     amount = models.DecimalField(max_digits=4, decimal_places=0)
 

@@ -14,12 +14,11 @@ stripe.api_key = settings.STRIPE_API_KEY
 
 class StripeWebhookView(BaseView):
     def post(self, request, **kwargs):
-        """
-        """
-        Payment = apps.get_model('payments', 'Payment')
+        """"""
+        Payment = apps.get_model("payments", "Payment")
 
         payload = request.body
-        sig_header = request.META['HTTP_STRIPE_SIGNATURE']
+        sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
         event = None
 
         # print(request.body)
@@ -33,12 +32,12 @@ class StripeWebhookView(BaseView):
         except stripe.error.SignatureVerificationError as e:
             return self.http_response_400("Invalid signature")
 
-        if event.type != 'payment_intent.succeeded':
-            return self.http_response_400(f'Unhandled event type {event.type}')
+        if event.type != "payment_intent.succeeded":
+            return self.http_response_400(f"Unhandled event type {event.type}")
 
-        amount = event.data.object['amount']
+        amount = event.data.object["amount"]
         try:
-            username = event.data.object['metadata']['musician']
+            username = event.data.object["metadata"]["musician"]
             # print(event.data.object)
             user = User.objects.get(username=username)
         except (KeyError, User.DoesNotExist):

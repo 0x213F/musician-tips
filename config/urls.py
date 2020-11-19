@@ -20,16 +20,15 @@ urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
     # API
     path("api/payments/", include("tip_jar.payments.urls", namespace="payments")),
-    path("api/communications/", include("tip_jar.communications.urls", namespace="communications")),
+    path(
+        "api/communications/",
+        include("tip_jar.communications.urls", namespace="communications"),
+    ),
     # Application
     path("<str:musician>/", MusicianChooseView.as_view(), name="donate"),
     path("<str:musician>/cart/", MusicianCartView.as_view(), name="cart"),
-    path(
-        "<str:musician>/checkout/", MusicianCheckoutView.as_view(), name="checkout"
-    ),
-    path(
-        "<str:musician>/receipt/", MusicianReceiptView.as_view(), name="receipt"
-    ),
+    path("<str:musician>/checkout/", MusicianCheckoutView.as_view(), name="checkout"),
+    path("<str:musician>/receipt/", MusicianReceiptView.as_view(), name="receipt"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
