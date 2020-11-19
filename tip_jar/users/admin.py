@@ -29,7 +29,6 @@ class UserAdmin(auth_admin.UserAdmin):
             {
                 "fields": (
                     "name",
-                    "landing_text",
                 )
             },
         ),
