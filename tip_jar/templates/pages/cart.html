@@ -45,7 +45,7 @@
       <hr>
       <div style="text-align: left;">
         <p style="margin-bottom: 0.25rem;"><small>${{ musician_amount }} is paid to <b>{{ musician.name }}</b></small></p>
-        <p style="margin-bottom: 0.25rem;"><small>${{ transaction_fee }} is paid as a transaction free</small></p>
+        <p style="margin-bottom: 0.25rem;"><small>${{ transaction_fee }} is paid as a transaction fee</small></p>
         <p style="margin-bottom: 0;"><small>${{ website_amount }} is paid to <b><i>musician.tips</i></b></small></p>
       </div>
     </div>
@@ -63,7 +63,7 @@
         <div class="form-check">
           <input id="website-donation" class="form-check-input refresh-page" type="checkbox" {% if website_donation %}checked{% endif %}>
           <label class="form-check-label">
-            Contribute $0.25 to the <nobr><a href="/faq/dividend/"><b><i>musician.tips</i> dividend</b></a></nobr>
+            Contribute $0.25 to the <nobr><a href="/faq#dividend/"><i>Musician Tips Dividend</i></a></nobr>
           </label>
         </div>
       </div>

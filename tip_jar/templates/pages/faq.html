@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block addedcss %}
+
+<style>
+
+  .main {
+    max-width: 500px;
+    align-self: center;
+    margin: auto;
+    margin-top: 3rem;
+  }
+
+  h3 {
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+
+</style>
+
+{% endblock %}
+
+{% block content %}
+
+<div class="main">
+
+  <h1>Frequently asked questions</h1>
+
+  <blockquote class="blockquote">
+
+    <h3 id="transaction-fee">Why is there a transaction fee?</h3>
+
+    <p><a href="https://stripe.com">Stripe</a> is the credit card payment processor. Their processing fee is <a href="https://stripe.com/pricing">2.9% + 30¢</a>.</p>
+
+    <h3 id="dividend">What is the <i>Musician Tips Dividend</i>?</h3>
+
+    <p>Everyone on this site makes music, but not everyone is heard. The <i>Musician Tips Dividend</i> is split equally across all active artists on the platform. Your contibution will help support the San Francisco music scene.</p>
+
+    <p>It also funds the continuous maintenance of this website (about $6/ month).</p>
+
+    <h3 id="feature-request">Where do I submit a feature request?</h3>
+
+    <p>Before creating a feature request, <a href="https://github.com/0x213F/tip-jar/issues/">browse pending feature requests</a>. Once you have verified that your request is unique, <a href="https://github.com/0x213F/tip-jar/issues/new">create a new issue.</a></p>
+
+    <h3 id="contribute">How can I contribute to <i>musician.tips</i>?</h3>
+
+    <p>Yes! You may donate your labor by working on <a href="https://github.com/0x213F/tip-jar/issues/">any accepted feature request</a>.</p>
+
+    <p>You can also monetarily <a href="https://github.com/0x213F/tip-jar">sponsor</a> the project to support maintenance and encourage further development.</p>
+
+    <h3 id="data-policy">What is your data policy?</h3>
+
+    <p>By default, we do not retain any of your information.</p>
+    <p>If you opt in to sharing your email, we securely store it in our database. It is never shared without your consent.</p>
+
+  </blockquote>
+
+</div>
+
+{% endblock %}
+
+{% block addedjavascript %}
+{% endblock %}
