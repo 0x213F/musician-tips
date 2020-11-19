@@ -20,7 +20,6 @@ class UserAdmin(auth_admin.UserAdmin):
                     "venmo_url",
                     "cash_app_url",
                     "paypal_url",
-                    "has_stripe_enabled",
                 )
             },
         ),
