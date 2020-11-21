@@ -17,7 +17,7 @@ jobs:
           port: 22
           key: ${{ secrets.PROD_SERVER_SSH_KEY }}
           script: |
-            cd musician_tips
+            cd musician-tips
             git pull --rebase
             docker-compose -f production.yml build
             supervisorctl restart musician_tips
