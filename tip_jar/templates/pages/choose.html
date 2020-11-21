@@ -61,8 +61,11 @@
 <div class="donation-container">
 
   <div style="width: 100%; height: 3rem;"></div>
-  <p class="aligned-right">Thank you for listening.</p>
-  <p class="text-muted aligned-right">Select a contribution amount towards {{ musician.name }}'s performance.</p>
+    {% if musician.profile_img %}
+    <img src="{{ musician.profile_img.url }}" style="float: right; height: 88px; width: 88px; border-radius: 50%; margin-left: 1rem;"/>
+    {% endif %}
+    <p class="aligned-right">Thank you for listening.</p>
+    <p class="text-muted aligned-right">Select a contribution amount towards {{ musician.name }}'s performance.</p>
   <div style="width: 100%; height: 1rem;"></div>
 
   <div class="donation-button-container">

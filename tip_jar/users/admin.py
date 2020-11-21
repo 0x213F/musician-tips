@@ -25,7 +25,10 @@ class UserAdmin(auth_admin.UserAdmin):
         ),
         (
             "Display",
-            {"fields": ("name",)},
+            {"fields": (
+                "name",
+                "profile_img",
+            )},
         ),
     )
     list_display = ["username", "name", "is_superuser"]
