@@ -1,6 +1,7 @@
 import decimal
 from decimal import Decimal
 
+from django.conf import settings
 from django.contrib.auth import get_user_model
 
 from config import utils as config_utils
@@ -49,5 +50,6 @@ class MusicianCartView(BaseView):
                 "transaction_covered": transaction_covered,
                 "website_amount": website_amount,
                 "website_donation": website_donation,
+                "website_donation_amount": settings.WEBSITE_DONATION_AMOUNT,
             },
         )

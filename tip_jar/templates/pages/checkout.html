@@ -257,6 +257,9 @@
 <!-- global JS variable: CLIENT_SECRET -->
 <div id="client-secret" class="hidden"><input value="{{ client_secret }}"></div>
 
+<!-- global JS variable: STRIPE_PUBLIC_KEY -->
+<div id="stripe-public-key" class="hidden"><input value="{{ stripe_public_key }}"></div>
+
 {% endblock %}
 
 {% block addedjavascript %}
@@ -266,6 +269,7 @@
     <script type="text/javascript">
 
       const CLIENT_SECRET = document.getElementById("client-secret").childNodes[0].value;
+      const STRIPE_PUBLIC_KEY = document.getElementById("stripe-public-key").childNodes[0].value;
 
       // Clean and validate donation amount
       const queryString = window.location.search;
@@ -305,7 +309,7 @@
       };
 
       // Initialize Stripe
-      var stripe = Stripe("pk_test_51HjCYCJNxsmNR22QpDcjAyof2rHqvwCHhjHUIwjtZbKrCQ66Prd54m7TkhQGdOGTii9B4ZLNjtso48J3k1BIvN9200Q2QHLHXX");
+      var stripe = Stripe(STRIPE_PUBLIC_KEY);
 
       // Create payment intent
       const request = new Request(

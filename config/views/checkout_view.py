@@ -60,5 +60,6 @@ class MusicianCheckoutView(BaseView):
                 "transaction_covered": transaction_covered,
                 "website_amount": website_amount,
                 "website_donation": website_donation,
+                "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
             },
         )

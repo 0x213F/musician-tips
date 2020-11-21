@@ -270,3 +270,6 @@ SOCIALACCOUNT_ADAPTER = "tip_jar.users.adapters.SocialAccountAdapter"
 # ------------------------------------------------------------------------------
 STRIPE_API_KEY = env("STRIPE_API_KEY")
 STRIPE_ENDPOINT_SECRET = env("STRIPE_ENDPOINT_SECRET")
+STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
+
+WEBSITE_DONATION_AMOUNT = "0.25"
