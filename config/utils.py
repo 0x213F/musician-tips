@@ -1,8 +1,6 @@
 import decimal
 from decimal import Decimal
 
-from django.conf import settings
-
 
 def get_transaction_fee(total_amount):
     """
@@ -18,7 +16,7 @@ def get_transaction_fee(total_amount):
     )
 
 
-def get_checkout_total(musician_amount, website_donation, transaction_covered):
+def get_checkout_total(musician_amount, transaction_covered):
     """
     Inputs
 
@@ -32,10 +30,7 @@ def get_checkout_total(musician_amount, website_donation, transaction_covered):
       - transaction_fee: how much goes to Stripe.
       - website_amount: how much goes to the Musician Tips Dividend.
     """
-    if website_donation:
-        website_amount = Decimal(settings.WEBSITE_DONATION_AMOUNT)
-    else:
-        website_amount = Decimal("0.00")
+    website_amount = Decimal("0.00")
 
     musician_amount = Decimal(musician_amount) / Decimal("100")
 

@@ -4,7 +4,6 @@ import stripe
 from django.apps import apps
 from django.conf import settings
 from django.contrib.auth import get_user_model
-from django.http import HttpResponse
 
 from tip_jar.core.base_view import BaseView
 
@@ -27,9 +26,9 @@ class StripeWebhookView(BaseView):
             event = stripe.Webhook.construct_event(
                 payload, sig_header, settings.STRIPE_ENDPOINT_SECRET
             )
-        except ValueError as e:
+        except ValueError:
             return self.http_response_400("Invalid payload")
-        except stripe.error.SignatureVerificationError as e:
+        except stripe.error.SignatureVerificationError:
             return self.http_response_400("Invalid signature")
 
         if event.type != "payment_intent.succeeded":
@@ -43,7 +42,7 @@ class StripeWebhookView(BaseView):
         except (KeyError, User.DoesNotExist):
             user = None
 
-        payment = Payment.objects.create(
+        Payment.objects.create(
             user=user,
             amount=amount,
         )

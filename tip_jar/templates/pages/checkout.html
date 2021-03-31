@@ -196,8 +196,7 @@
       <hr>
       <div style="text-align: left;">
         <p style="margin-bottom: 0.25rem;"><small>${{ musician_amount }} is paid to <b>{{ musician.name }}</b></small></p>
-        <p style="margin-bottom: 0.25rem;"><small>${{ transaction_fee }} is paid as a transaction fee</small></p>
-        <p style="margin-bottom: 0;"><small>${{ website_amount }} is paid to <b><i>musician.tips</i></b></small></p>
+        <p style="margin-bottom: 0;"><small>${{ transaction_fee }} is paid as a transaction fee</small></p>
       </div>
     </div>
   </div>
@@ -223,16 +222,10 @@
       </div>
 
       <div class="form-group" style="margin-bottom: 0;">
-        <div class="form-check" style="padding-bottom: 0.25rem">
+        <div class="form-check">
           <input id="allow-musician-to-contact-me" class="form-check-input" type="checkbox">
           <label class="form-check-label">
             Allow <b>{{ musician.name }}</b> to contact me
-          </label>
-        </div>
-        <div class="form-check">
-          <input id="allow-website-to-contact-me" class="form-check-input" type="checkbox">
-          <label class="form-check-label">
-            Subscribe to <b><i>musician.tips</i></b>
           </label>
         </div>
       </div>
@@ -274,7 +267,6 @@
       // Clean and validate donation amount
       const queryString = window.location.search;
       const urlParams = new URLSearchParams(queryString);
-      const donationAmount = parseFloat(urlParams.get('amount'));
 
       // Show a spinner on payment submission
       var loading = function(isLoading) {
@@ -421,18 +413,7 @@
               method: "POST",
               mode: "same-origin",
               body: JSON.stringify({'musicianUsername': musicianName, 'subscriptionEmail': subscriptionEmail}),
-            })
-          )
-        }
-
-        checkbox = document.getElementById('allow-website-to-contact-me');
-        if(checkbox.checked) {
-          promises.push(
-            fetch(request, {
-              method: "POST",
-              mode: "same-origin",
-              body: JSON.stringify({'musicianUsername': 'admin', 'subscriptionEmail': subscriptionEmail}),
-            })
+            });
           )
         }
 

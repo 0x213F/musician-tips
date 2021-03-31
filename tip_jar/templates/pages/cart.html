@@ -51,19 +51,11 @@
     </div>
     <div class="card-body">
 
-      <div class="form-group" style="margin-bottom: 0; text-align: left; padding-bottom: 0.25rem;">
+      <div class="form-group" style="margin-bottom: 0; text-align: left;">
         <div class="form-check">
           <input id="transaction-covered" class="form-check-input refresh-page" type="checkbox" {% if transaction_covered %}checked{% endif %}>
           <label class="form-check-label" style="text-align: left;">
             Cover the transaction fee
-          </label>
-        </div>
-      </div>
-      <div class="form-group" style="margin-bottom: 0; text-align: left;">
-        <div class="form-check">
-          <input id="website-donation" class="form-check-input refresh-page" type="checkbox" {% if website_donation %}checked{% endif %}>
-          <label class="form-check-label">
-            Contribute ${{ website_donation_amount }} to the <nobr><a href="/faq#dividend"><i>Musician Tips Dividend</i></a></nobr>
           </label>
         </div>
       </div>
@@ -114,12 +106,10 @@
           var button = buttons[i];
           button.onclick = function() {
               const transactionCovered = document.getElementById('transaction-covered').checked;
-              const websiteDonation = document.getElementById('website-donation').checked;
 
               let newSearchParams = new URLSearchParams();
               newSearchParams.set("amount", amount);
               newSearchParams.set("transactionCovered", transactionCovered);
-              newSearchParams.set("websiteDonation", websiteDonation);
 
               window.location.href = pathName + "?" + newSearchParams.toString();
           }
@@ -128,12 +118,10 @@
       var redirect = document.getElementById('go-to-checkout');
       redirect.onclick = function() {
           const transactionCovered = document.getElementById('transaction-covered').checked;
-          const websiteDonation = document.getElementById('website-donation').checked;
 
           let newSearchParams = new URLSearchParams();
           newSearchParams.set("amount", amount);
           newSearchParams.set("transactionCovered", transactionCovered);
-          newSearchParams.set("websiteDonation", websiteDonation);
 
           const musicianName = window.location.pathname.split('/')[1];
 

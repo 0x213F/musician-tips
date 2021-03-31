@@ -1,5 +1,4 @@
 import stripe
-import decimal
 from decimal import Decimal
 
 from django.conf import settings
@@ -7,6 +6,7 @@ from django.contrib.auth import get_user_model
 
 from config import utils as config_utils
 from tip_jar.core.base_view import BaseView
+
 
 User = get_user_model()
 stripe.api_key = settings.STRIPE_API_KEY
@@ -18,7 +18,6 @@ class MusicianCheckoutView(BaseView):
         By now the user has finalized their cart selection.
 
           - musician_amount: initial amount pledge.
-          - website_donation: opt in to donating to the Musician Tips Dividend.
           - transaction_covered: opt in to covering the transaction fees.
           - total_amount: the final total bill.
           - transaction_fee: how much goes to Stripe
@@ -28,17 +27,14 @@ class MusicianCheckoutView(BaseView):
         user = User.objects.get(username=musician)
 
         musician_amount = request.GET.get("amount")
-        website_donation = request.GET.get("websiteDonation", False) == "true"
         transaction_covered = request.GET.get("transactionCovered", False) == "true"
 
         (
             total_amount,
             musician_amount,
             transaction_fee,
-            website_amount,
         ) = config_utils.get_checkout_total(
             musician_amount,
-            website_donation,
             transaction_covered,
         )
 
@@ -58,8 +54,6 @@ class MusicianCheckoutView(BaseView):
                 "musician_amount": musician_amount,
                 "transaction_fee": transaction_fee,
                 "transaction_covered": transaction_covered,
-                "website_amount": website_amount,
-                "website_donation": website_donation,
                 "stripe_public_key": settings.STRIPE_PUBLIC_KEY,
             },
         )

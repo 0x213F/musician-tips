@@ -3,9 +3,6 @@ import uuid
 
 from django.db import models
 
-import pghistory
-import pgtrigger
-
 
 @pgtrigger.register(
     pgtrigger.Protect(
