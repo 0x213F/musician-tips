@@ -52,4 +52,4 @@ def get_checkout_total(musician_amount, transaction_covered):
 
     total_amount = musician_amount + website_amount + transaction_fee
 
-    return total_amount, musician_amount, transaction_fee, website_amount
+    return total_amount, musician_amount, transaction_fee

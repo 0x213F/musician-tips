@@ -95,7 +95,7 @@
   const button = document.getElementById("custom-donation-submit");
   button.addEventListener("click", function() {
     var amount = document.getElementById("custom-donation-amount").value;
-    document.location.href = `${window.location.pathname}cart/?amount=${amount * 100}`;
+    document.location.href = `${window.location.pathname}cart/?amount=${amount * 100}&transactionCovered=false`;
   });
 </script>
 
